@@ -102,6 +102,7 @@ class ForeheadTracking:
             self.face_startX, self.face_startY, self.face_endX, self.face_endY = box.astype("int")
             self.face_width = self.face_endX - self.face_startX
             self.face_height = self.face_endY - self.face_startY
+        return self.face_startX, self.face_startY, self.face_endX, self.face_endY
 
     def get_forehead_coord(self):
         """
