@@ -77,7 +77,7 @@ cv2.destroyAllWindows()
 ```python
 forehead.analyze(frame)
 ```
-The analysis works as;
+
 1. Face rectangle is found with Opencv DNN.
 2. The forehead rectangle is subtracted by proportioning it to the face rectangle.
 3. Using the DLIB face landmark, the coordinates of the two eye centers are found and the angle between them is calculated.
