@@ -82,8 +82,8 @@ The analysis works as;
 2. The forehead rectangle is subtracted by proportioning it to the face rectangle.
 3. Using the DLIB face landmark, the coordinates of the two eye centers are found and the angle between them is calculated.
 4. By using the eye angle and the center of the forehead rectangle found before, the translated and rotated corner coordinates of the forehead rectangle are found.
-5. After the forehead coordinates are extracted, the forehead values ​​are revealed by warping the forehead picture.
+5. After the forehead coordinates are extracted, the forehead values are revealed by warping the forehead picture.
 
 ### You want to help?
-Your suggestions, bugs reports and pull requests are welcome and appreciated. You can also starring ⭐️ the project!
+Your suggestions, bugs reports and pull requests are welcome and appreciated. You can also star ⭐️ the project!
 
