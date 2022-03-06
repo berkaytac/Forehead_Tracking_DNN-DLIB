@@ -16,9 +16,9 @@ pip install -r requirements.txt
 
 > The Dlib library has four primary prerequisites: Boost, Boost.Python, CMake and X11/XQuartx. [Read this article](https://www.pyimagesearch.com/2017/03/27/how-to-install-dlib/) to know how to easily install them.
 
-- From the Line 7-9 of example_foreheadtracking.py, 
-  - Either change source to "0" for Real-Time Webcam Forehead Tracking,
-  - Enter the path of video file for Forehead Tracking from a video. 
+- From the Line 7-9 of example_foreheadtracking.py, change soure name to;
+  - "0" for Real-Time Webcam Forehead Tracking,
+  - Path of video file for Forehead Tracking from a video. 
 
 
 ```
