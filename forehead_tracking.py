@@ -3,7 +3,6 @@ import os
 import numpy as np
 import dlib
 
-
 class ForeheadTracking:
     def __init__(self):
         # Frame Parameters
