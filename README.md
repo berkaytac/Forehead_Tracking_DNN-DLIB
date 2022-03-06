@@ -1,68 +1,80 @@
 # Face and Forehead Tracking with DNN+Dlib
 
-The purpose of this side project is to extract the forehead information using the OpenCV's DNN. Warping is applied using DLIB face landmarks eye information to overcome head rotations.
-This program can also be used to extract **webcam-based Forehead Tracking System**. The forehead rectangle position is mostly centered, taking into account head movements, in real time.
+The purpose of this side project is to extract the forehead information using OpenCV's DNN. Warping is applied using DLIB face landmarks eye information to overcome head rotations.
+This program works also in real time for **webcam-based Forehead Tracking Applications**. The forehead rectangle position is mostly centered, taking into account head movements.
 
-[![Forehead](https://media.giphy.com/media/ji5zwI3xBiGGK1f1jr/giphy.mp4)](https://youtu.be/7b_rWvnbYHk)
+[![Forehead](https://media.giphy.com/media/fPtLnPU6xFWj9s8Fqe/giphy.gif)](https://youtu.be/7b_rWvnbYHk)
 
-
-_🚀 Quick note: I'm looking for job opportunities as a software developer, for exciting projects in ambitious companies. Anywhere in the world. Send me an email!_
 
 ## Installation
 
-Clone this project:
-
-```
-git clone https://github.com/antoinelame/GazeTracking.git
-```
-
-Install these dependencies (NumPy, OpenCV, Dlib):
+- Install these dependencies (imutils, Numpy, Dlib, Opencv-Python):
 
 ```
 pip install -r requirements.txt
 ```
 
-> The Dlib library has four primary prerequisites: Boost, Boost.Python, CMake and X11/XQuartx. If you doesn't have them, you can [read this article](https://www.pyimagesearch.com/2017/03/27/how-to-install-dlib/) to know how to easily install them.
+> The Dlib library has four primary prerequisites: Boost, Boost.Python, CMake and X11/XQuartx. [Read this article](https://www.pyimagesearch.com/2017/03/27/how-to-install-dlib/) to know how to easily install them.
 
-Run the demo:
+- From the Line 7-9 of example_foreheadtracking.py, 
+  - Either change source to "0" for Real-Time Webcam Forehead Tracking,
+  - Enter the path of video file for Forehead Tracking from a video. 
+
 
 ```
-python example.py
+# Source video
+source = 0  # For webcam
+# OR
+source = "source_vid.avi"
 ```
+
+Run the Forehead Tracking file:
+
+```
+python example_foreheadtracking.py
+```
+
+"output_video.mp4" output file will be created in the source folder.
+
 
 ## Simple Demo
-
 ```python
 import cv2
-from gaze_tracking import GazeTracking
+import imutils
+from forehead_tracking import ForeheadTracking
 
-gaze = GazeTracking()
-webcam = cv2.VideoCapture(0)
+source = 0  # Webcam
+# source = "source_vid.avi" # video file
 
-while True:
-    _, frame = webcam.read()
-    gaze.refresh(frame)
+cap = cv2.VideoCapture(source)
+video_file = "output_video.mp4"
+fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+fps = round(cap.get(cv2.CAP_PROP_FPS))
+w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+video_out = cv2.VideoWriter(video_file, fourcc, fps, (w, h))
 
-    new_frame = gaze.annotated_frame()
-    text = ""
-
-    if gaze.is_right():
-        text = "Looking right"
-    elif gaze.is_left():
-        text = "Looking left"
-    elif gaze.is_center():
-        text = "Looking center"
-
-    cv2.putText(new_frame, text, (60, 60), cv2.FONT_HERSHEY_DUPLEX, 2, (255, 0, 0), 2)
-    cv2.imshow("Demo", new_frame)
-
-    if cv2.waitKey(1) == 27:
+# initialize the tracker
+forehead = ForeheadTracking()
+while cap.isOpened():
+    ret, frame = cap.read()
+    if ret:
+        frame = forehead.analyze(frame)
+        video_out.write(frame)
+        frame = imutils.resize(frame, width=640)  # this is only for the imshow window
+        cv2.imshow("Forehead Detection", frame)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+    else:
         break
+video_out.release()
+cap.release()
+cv2.destroyAllWindows()
 ```
 
 ## Documentation
 
-In the following examples, `gaze` refers to an instance of the `GazeTracking` class.
+In the following examples, `forehead` refers to an instance of the `ForheadTracking` class.
 
 ### Refresh the frame
 
